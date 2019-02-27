@@ -9,7 +9,7 @@ python ngw-login.py [[--user=2018xxxxxx] [--password=xxxxxx] [--line=CUC-BRAS] [
 --line        线路
 --logout      退出登录
 
-其实一句:
+##### 其实只需要一句:
 ```bash
 curl 'http://10.3.8.211' --data "DDDDD=用户名&upass=密码&0MKKey="
 ```
