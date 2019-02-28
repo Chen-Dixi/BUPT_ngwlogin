@@ -2,7 +2,7 @@
 北京邮电大学ngw.bupt.edu.cn 校园网登录脚本
 
 ```bash
-python ngw-login.py [[--user=2018xxxxxx] [--password=xxxxxx] [--line=CUC-BRAS] [--logout=True]]
+python ngw-login.py [[--user=2018xxxxxx] [--password=xxxxxx] [--line=CUC-BRAS] [--logout=True [--old=True]] ]
 ```
 --user        用户名
 --password    密码
