@@ -10,6 +10,7 @@ flags.DEFINE_string('user','2018xxxxxx','username of your campus account')
 flags.DEFINE_string('password','xxxxxx','password of your campus account')
 flags.DEFINE_string('line','CUC-BRAS','which line do you prefer')
 flags.DEFINE_boolean('logout',False,'set true if you want to logout')
+flags.DEFINE_boolean('old',False,'set true if you want to logout for 10.3.8.211')
 HEADERS = {
     'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -49,12 +50,30 @@ class NgwLoginTool(object):
         logout_url='http://ngw.bupt.edu.cn/logout'
         self._get(logout_url)
         print("已登出")
+    def logout1038211(self):
+        headers = {
+            'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,de;q=0.7,pt;q=0.8',
+            'Connection': 'keep-alive',
+            'Host':'10.3.8.211',
+            'Referer':'http://10.3.8.211/',
+            'Cookie':'myusername='+self.username+'; username='+self.username+'; smartdot='+self.password,
+            'Upgrade-Insecure-Requests':'1',
+        }
+        logout_url = 'http://10.3.8.211/F.htm'
+        _get = partial(self._session.get, headers=headers,timeout=15)
+        _get(logout_url)
 
 def main(argv):
     if FLAGS.user is not None and FLAGS.password is not None and FLAGS.line is not None:
         loginTool = NgwLoginTool(FLAGS.user,FLAGS.password,FLAGS.line,15)
         if FLAGS.logout:
-            loginTool._logout()
+            if FLAGS.old:
+                loginTool.logout1038211()
+            else:
+                loginTool._logout()
         else:
             loginTool._login()
 
